@@ -14,7 +14,7 @@ App.Login = Ext.extend(Ext.Button, {
 	}
 	,updateText: function(username){
 		if (username == 'Anonymous') {
-			this.setText('Log in with your FluidDB ID');
+			this.setText('Log in with your Fluidinfo ID');
 		}
 		else {
 			this.setText('Logged in as: ' + username);

@@ -89,12 +89,12 @@ Ext.onReady(function() {
 	Ext.Msg.minWidth = 300;
 	Ext.Ajax.on('requestexception', function(conn, response, options){
 		json = Ext.util.JSON.decode(response.responseText);
-		Ext.Msg.alert('Error from FluidDB', json.msg);
+		Ext.Msg.alert('Error from Fluidinfo', json.msg);
 	});
 
 	Ext.Direct.on('exception', function(e){
 		var msg = e.message.replace(/</g, "&lt;");
-		Ext.Msg.alert('Error from FluidDB', msg);
+		Ext.Msg.alert('Error from Fluidinfo', msg);
 	});
 });
 

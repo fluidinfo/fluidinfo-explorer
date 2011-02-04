@@ -3,7 +3,7 @@
     fluiddbexplorer
     ~~~~~~~~~~~~~~~
 
-    :copyright: 2010 by FluidDB Explorer Authors
+    :copyright: 2010 by Fluidinfo Explorer Authors
     :license: MIT, see LICENSE for more information
 """
 
@@ -59,7 +59,7 @@ def splash(instance):
         session['instance'] = instance
         return render_template("index.html",
                                username=username,
-                               rootlabel='FluidDB',
+                               rootlabel='Fluidinfo',
                                instance=instance,
                                rootid='nstree-disabled')
 

@@ -5,7 +5,7 @@
 
     Run server
 
-    :copyright: 2010 by FluidDB Explorer Authors
+    :copyright: 2010 by Fluidinfo Explorer Authors
     :license: MIT, see LICENSE for more information
 """
 
