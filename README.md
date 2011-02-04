@@ -1,14 +1,14 @@
 FluidDB Explorer
 ================
 
-(c) 2010 FluidDBExplorer Authors (as specified in AUTHORS file)
+(c) 2011 Fluidinfo Explorer Authors (as specified in AUTHORS file)
 
 License: MIT License
 
-What is FluidDB Explorer
-------------------------
+What is the Fluidinfo Explorer
+------------------------------
 
-With this tool you can navigate into [FluidDB](http://www.fluidinfo.com/fluiddb)
+With this tool you can navigate into [Fluidinfo](http://www.fluidinfo.com)
 using either the namespace tree or by doing queries.
 
 Note: This is work in progress.
@@ -16,10 +16,10 @@ Note: This is work in progress.
 How it's built
 --------------
 
-FluidDB Explorer uses these:
+The Fluidinfo Explorer uses these:
 
-* [FluidDB](http://www.fluidinfo.com/fluiddb)
-* [FOM](http://bitbucket.org/aafshar/fom-main/wiki/Home)
+* [Fluidinfo](http://www.fluidinfo.com)
+* [FOM](https://launchpad.net/fom)
 * [ExtJS](http://www.extjs.com)
 * [Flask](http://flask.pocoo.org)
 * [Gunicorn](http://gunicorn.org)
