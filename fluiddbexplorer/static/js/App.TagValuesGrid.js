@@ -114,7 +114,10 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 			return '<a href="' + value + '" target="_blank">' + value + '</a>';
 		}
 
-		value = value.replace(/(([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12})/g, '<a href="" expl:objectid="$1" class="openobject">$1</a>');
+		if (!value.match(/^Opaque value with content-type/)) {
+			value = value.replace(/(([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12})/g, '<a href="" expl:objectid="$1" class="openobject">$1</a>');
+		}
+
 		return value;
 	}
 	,onClick: function(e, target) {
