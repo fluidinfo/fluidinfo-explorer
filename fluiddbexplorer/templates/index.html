@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-	<title>FluidDB Explorer</title>
+	<title>Fluidinfo Explorer</title>
 
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="extjs/resources/css/ext-all.css") }}">
 	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename="css/application.css") }}">
@@ -17,36 +17,36 @@ var _gaq=_gaq||[];_gaq.push(['_setAccount','{{ config.GOOGLE_ANALYTICS_CODE }}']
 </head>
 <body class="instance-{{ instance }}">
 
-	<div id="logo"><h1>FluidDB Explorer{% if instance == 'sandbox' %} (sandbox){% endif %}</h1></div>
+	<div id="logo"><h1>Fluidinfo Explorer{% if instance == 'sandbox' %} (sandbox){% endif %}</h1></div>
 
 <div id="welcome" class="x-hidden">
 	<a href="http://github.com/paparent/FluidDB-Explorer"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
 
-	<h2>Welcome to FluidDB Explorer</h2>
+	<h2>Welcome to Fluidinfo Explorer</h2>
 	{% if rootid == 'nstree-disabled' %}
 	<div class="warning">
 		<strong>Important:</strong> The namespace tree that usually appears on the left has been disabled because you didn't put a starting namespace in the url. Read on to learn more.
 	</div>
 	{% endif %}
-	<h3>What is FluidDB Explorer ?</h3>
-	<p>With this tool you can quickly navigate in <a href="http://www.fluidinfo.com/fluiddb" target="_blank">FluidDB</a>, using either the namespace tree or via <a href="http://doc.fluidinfo.com/fluidDB/queries.html" target="_blank">FluidDB queries</a>.</p>
-	<p>You can explore either the main FluidDB instance (the default), or the sandbox, at: <a href="{{ config.BASE_URL }}/sandbox/">{{ config.BASE_URL }}/sandbox/</a></p>
+	<h3>What is Fluidinfo Explorer ?</h3>
+	<p>With this tool you can quickly navigate in <a href="http://www.fluidinfo.com" target="_blank">Fluidinfo</a>, using either the namespace tree or via <a href="http://doc.fluidinfo.com/fluidDB/queries.html" target="_blank">Fluidinfo queries</a>.</p>
+	<p>You can explore either the main Fluidinfo instance (the default), or the sandbox, at: <a href="{{ config.BASE_URL }}/sandbox/">{{ config.BASE_URL }}/sandbox/</a></p>
 	<p>To start exploring from a top-level namespace, add it to the URL. Here are some examples:</p>
 	<ul>
 		<li><a href="{{ config.BASE_URL }}/fluiddb/twitter.com">{{ config.BASE_URL }}/fluiddb/twitter.com</a></li>
 		<li><a href="{{ config.BASE_URL }}/fluiddb/epointsystem/scada">{{ config.BASE_URL }}/fluiddb/epointsystem/scada</a></li>
 	</ul>
-	<p>If you don't have a FluidDB account, feel free to <a href="http://fluidinfo.com/accounts/new/" target="_blank">create one</a>!</p>
+	<p>If you don't have a Fluidinfo account, feel free to <a href="http://fluidinfo.com/accounts/new/" target="_blank">create one</a>!</p>
 
-	<h3>What is FluidDB ?</h3>
-	<p><a href="http://www.fluidinfo.com/fluiddb" target="_blank">FluidDB</a> is an online "cloud" database. Using a flexible underlying representation of information and a new model of control, it allows users and applications to work with information more naturally. That includes dynamically organizing, sharing, combining and augmenting information, and searching in ways that have previously not been possible. It also allows users to choose exactly which information to share with whom, with separate controls for reading and writing.</p>
-	<p>FluidDB lets data be social. It allows almost unlimited information personalization by individual users and applications, and also <em>between</em> them. This makes it simple to build a wide variety of applications that benefit from cooperation, and which are open to unanticipated future enhancements. Even more importantly, FluidDB facilitates and encourages the growth of applications that leave users in control of their own data.</p>
+	<h3>What is Fluidinfo ?</h3>
+	<p><a href="http://www.fluidinfo.com" target="_blank">Fluidinfo</a> is an online "cloud" database. Using a flexible underlying representation of information and a new model of control, it allows users and applications to work with information more naturally. That includes dynamically organizing, sharing, combining and augmenting information, and searching in ways that have previously not been possible. It also allows users to choose exactly which information to share with whom, with separate controls for reading and writing.</p>
+	<p>Fluidinfo lets data be social. It allows almost unlimited information personalization by individual users and applications, and also <em>between</em> them. This makes it simple to build a wide variety of applications that benefit from cooperation, and which are open to unanticipated future enhancements. Even more importantly, Fluidinfo facilitates and encourages the growth of applications that leave users in control of their own data.</p>
 
 	<h3>How it's built</h3>
-	<p>FluidDB Explorer uses these:</p>
+	<p>Fluidinfo Explorer uses these:</p>
 	<ul>
-		<li><a href="http://www.fluidinfo.com/fluiddb" target="_blank">FluidDB</a></li>
-		<li><a href="http://bitbucket.org/aafshar/fom-main/wiki/Home" target="_blank">FOM</a></li>
+		<li><a href="http://www.fluidinfo.com" target="_blank">Fluidinfo</a></li>
+		<li><a href="https://launchpad.net/fom" target="_blank">FOM</a></li>
 		<li><a href="http://www.extjs.com" target="_blank">ExtJS</a></li>
 		<li><a href="http://flask.pocoo.org" target="_blank">Flask</a></li>
 		<li><a href="http://gunicorn.org" target="_blank">Gunicorn</a></li>

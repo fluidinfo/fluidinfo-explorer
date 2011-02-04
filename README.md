@@ -1,4 +1,4 @@
-FluidDB Explorer
+Fluidinfo Explorer
 ================
 
 (c) 2011 Fluidinfo Explorer Authors (as specified in AUTHORS file)
