@@ -1,0 +1,5 @@
+fluiddbexplorer/local_settings.py
+fluiddbexplorer/static/ext.js
+fluiddbexplorer/static/fluiddbexplorer.js
+
+*.pyc
