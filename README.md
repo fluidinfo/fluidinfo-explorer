@@ -19,7 +19,7 @@ How it's built
 The Fluidinfo Explorer uses these:
 
 * [Fluidinfo](http://www.fluidinfo.com)
-* [FOM](http://bitbucket.org/aafshar/fom-main/wiki/Home)
+* [FOM](https://launchpad.net/fom)
 * [ExtJS](http://www.extjs.com)
 * [Flask](http://flask.pocoo.org)
 * [Gunicorn](http://gunicorn.org)
