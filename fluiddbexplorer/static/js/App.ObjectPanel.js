@@ -16,7 +16,6 @@ App.ObjectPanel = Ext.extend(Ext.Panel, {
 	}
 	,afterRender: function(){
 		App.ObjectPanel.superclass.afterRender.apply(this, arguments);
-		this.body.on('click', this.onClick, this);
 
 		var panel = this;
 
@@ -30,14 +29,6 @@ App.ObjectPanel = Ext.extend(Ext.Panel, {
 			panel.doLayout();
 		});
 	}
-	,onClick: function(e, target){
-		if (target = e.getTarget('a', 3)) {
-			e.stopEvent();
-			win = new Ext.ux.ManagedIFrame.Window({frame:true,defaultSrc:target.href, width:800, height:500});
-			win.show();
-		}
-	}
-
 });
 
 Ext.reg('app.objectpanel', App.ObjectPanel);
