@@ -109,7 +109,8 @@ def TagValuesFetch(oid):
         else:
             value = "Too many tags to fetch values"
 
-        out.append({'tag': tag, 'value': value, 'readonly': readonly})
+        ns = tag.split("/")[0]
+        out.append({'ns': ns, 'tag': tag, 'value': value, 'readonly': readonly})
     return {'tags': out}
 
 
