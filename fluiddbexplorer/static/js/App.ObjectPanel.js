@@ -5,7 +5,7 @@ App.ObjectPanel = Ext.extend(Ext.Panel, {
 	,layout: 'vbox'
 	,initComponent: function(){
 		this.items = [
-			{border:true,margins:"5 5 5 5",frame:true,layout:'fit',bodyStyle:'padding:5px;',html:"Object ID: " + this.oid}
+			{border:true,margins:"3 3 3 3",frame:true,layout:'fit',bodyStyle:'padding:2px;',html:"Object ID: " + this.oid}
 			,new App.TagValuesGrid({oid: this.oid, flex: 1})
 		];
 		this.title = 'Object ' + this.oid.split('-')[0];
@@ -26,7 +26,6 @@ App.ObjectPanel = Ext.extend(Ext.Panel, {
 				value = '<a href="' + value + '" target="_blank">' + value + '</a>';
 			}
 			txt = "Object ID: " + panel.oid + "<br><br>About: " + value;
-			txt += '<br><br><a href="http://abouttag.appspot.com/id/butterfly/'+panel.oid+'" target="_blank">View visual representation</a>';
 			panel.items.items[0].update(txt);
 			panel.doLayout();
 		});
