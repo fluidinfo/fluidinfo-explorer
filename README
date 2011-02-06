@@ -1,0 +1,52 @@
+Fluidinfo Explorer
+==================
+
+(c) 2011 Fluidinfo Explorer Authors (see the AUTHORS file)
+
+License: MIT License
+
+What is the Fluidinfo Explorer
+------------------------------
+
+With this tool you can navigate into Fluidinfo (http://fluidinfo.com)
+using either a namespace tree or via queries.
+
+Preparing to run the Explorer locally
+-------------------------------------
+
+Install virtualenv:
+
+$ sudo apt-get install python-virtualenv
+
+Then make a new virtualenv to work in
+
+$ virtualenv fluidinfo-explorer
+$ cd fluidinfo-explorer
+$ . bin/activate
+$ pip install -r requirements.txt
+
+Use the 'deactivate' command at the shell to leave the environment
+virtualenv created for you. NOTE: deactivate is a shell function created by
+the activate command.
+
+Running
+-------
+
+1. Get the source: bzr branch lp:fluidinfo-explorer
+2. Copy fluiddbexplorer/local_settings.py-dist to fluiddbexplorer/local_settings.py
+3. In local_settings.py file
+     Optionally turn on debug (DEBUG = True)
+     Optionally change the local port number (BASE_URL= http://localhost:5000)
+4. Run the explorer: python runserver.py
+
+How it's built
+--------------
+
+The Fluidinfo Explorer uses these:
+
+* [Fluidinfo](http://www.fluidinfo.com)
+* [FOM](https://launchpad.net/fom)
+* [ExtJS](http://www.extjs.com)
+* [Flask](http://flask.pocoo.org)
+* [Gunicorn](http://gunicorn.org)
+* [nginx](http://nginx.org)
