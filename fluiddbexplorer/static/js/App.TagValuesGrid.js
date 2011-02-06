@@ -4,16 +4,28 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 	,title: 'Tag values'
 	,loadMask: true
 	,oid: null
-	,viewConfig: {emptyText: 'Nothing to display'}
 	,initComponent: function(){
 		this.sm = new Ext.grid.RowSelectionModel({singleSelect:true});
-		this.store = gridstore = new Ext.data.DirectStore({
-			directFn: direct.TagValuesFetch
-			,paramsAsHash: false
-			,paramOrder: 'oid'
+		this.store = gridstore = new Ext.data.GroupingStore({
+			proxy: new Ext.data.DirectProxy({
+				directFn: direct.TagValuesFetch
+				,paramsAsHash: false
+				,paramOrder: 'oid'
+			})
 			,autoDestroy: true
-			,root: 'tags'
-			,fields: ['tag', 'value', 'readonly']
+			,groupField: 'ns'
+			,sortInfo: {field: 'tag', direction: 'ASC'}
+			,remoteSort: false
+			,reader: new Ext.data.JsonReader({
+				root: 'tags'
+				,idProperty: 'tag'
+				,fields: ['ns', 'tag', 'value', 'readonly']
+			})
+		});
+		this.view = new Ext.grid.GroupingView({
+			forceFit: true
+			,groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Items" : "Item"]})'
+			,emptyText: 'Nothing to display'
 		});
 		this.tbar = [
 			{text: 'Refresh', iconCls: 'icon-refresh', handler: this.onRefresh, scope: this}
@@ -33,6 +45,7 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 		this.colModel = new Ext.grid.ColumnModel({
 			columns: [
 				this.action
+				,{header:'Namespace', dataIndex: 'ns', hidden: true}
 				,{id:'tag', header:'Tag', width: 230, dataIndex: 'tag', sortable: true}
 				,{header: 'Value', width: 600, dataIndex: 'value', sortable: true, renderer: {fn: this.valueRenderer, scope: this}, editor: {xtype: 'textfield'}}
 			]
