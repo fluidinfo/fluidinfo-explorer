@@ -17,6 +17,7 @@ from fluiddbexplorer import extdirect
 
 
 INSTANCE_URL = {
+    'fluidinfo': 'http://fluiddb.fluidinfo.com',
     'fluiddb': 'http://fluiddb.fluidinfo.com',
     'sandbox': 'http://sandbox.fluidinfo.com',
 }
