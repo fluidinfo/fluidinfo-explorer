@@ -77,11 +77,15 @@ def Query(querystr):
         if showAbout:
             try:
                 about = g.fluid.objects[objid]['fluiddb/about'].get().value
+                type = 'primitive'
             except:
                 about = 'no about tag'
+                type = 'empty'
         else:
-            about = 'too many objects (more than %i) to fetch about tag' % (limit_abouttag,)
-        out.append({'oid': objid, 'about': about})
+            about = ''
+            type = 'notfetch'
+        out.append({'oid': objid, 'about': about, 'type': type})
+
     return {'ids': out}
 
 @extdirect.register()
