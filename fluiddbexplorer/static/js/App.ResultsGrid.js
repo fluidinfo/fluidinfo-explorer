@@ -34,8 +34,12 @@ App.ResultsGrid = Ext.extend(Ext.grid.GridPanel, {
 		this.plugins = [this.action];
 		App.ResultsGrid.superclass.initComponent.call(this);
 
-		this.doRefresh();
 		this.on('rowdblclick', this.onRowDblClick, this);
+	}
+	,afterRender: function(){
+		App.ResultsGrid.superclass.afterRender.apply(this, arguments);
+
+		this.doRefresh();
 	}
 	,aboutTagRenderer: function(value, metaData) {
 		if (value.match(/^https?:\/\//)) {
