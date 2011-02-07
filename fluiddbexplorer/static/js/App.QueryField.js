@@ -1,5 +1,5 @@
 App.QueryField = Ext.extend(Ext.form.TwinTriggerField, {
-	emptyText: 'Query'
+	emptyText: 'Enter your Query or an Object ID'
 	,trigger1Class: 'x-form-clear-trigger'
 	,trigger2Class: 'x-form-search-trigger'
 	,validationEvent: false

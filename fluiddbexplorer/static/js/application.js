@@ -83,7 +83,12 @@ Ext.onReady(function() {
 	});
 
 	query.on('query', function(q){
-		openResultsGrid(q);
+		if (q.match(/^(([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12})$/)) {
+			Ext.getCmp('mainpanel').openObject(q);
+		}
+		else {
+			openResultsGrid(q);
+		}
 	});
 
 	Ext.Msg.minWidth = 300;
