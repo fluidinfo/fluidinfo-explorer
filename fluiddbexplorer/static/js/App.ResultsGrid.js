@@ -79,7 +79,11 @@ App.ResultsGrid = Ext.extend(Ext.grid.GridPanel, {
 		Ext.getCmp('mainpanel').openObject(oid);
 	}
 	,onLoadAll: function(a){
-		this.store.each(this.setAboutTag);
+		this.store.each(function(r){
+			if (r.data.type == 'notfetch') {
+				this.setAboutTag(r);
+			}
+		}, this);
 	}
 	,onRefreshRow: function(g, r, action, row, col){
 		this.setAboutTag(r);

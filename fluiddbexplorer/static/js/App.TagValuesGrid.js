@@ -90,7 +90,11 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 		direct.TagObject(this.oid, tag,  value, function(){store.reload();});
 	}
 	,onLoadAllTags: function(a){
-		this.store.each(this.setTag.createDelegate(this));
+		this.store.each(function(r){
+			if (r.data.type == 'notfetch') {
+				this.setTag(r);
+			}
+		}, this);
 	}
 	,onRefresh: function(){
 		this.store.reload();
