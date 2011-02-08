@@ -150,7 +150,10 @@ def GetTagValue(oid, tag):
             readonly = False
         else:
             type = 'primitive'
-            value = str(tagresponse.value)
+            if isinstance(tagresponse.value, list):
+                value = json.dumps(tagresponse.value)
+            else:
+                value = str(tagresponse.value)
             readonly = False
     else:
         type = 'opaque'
