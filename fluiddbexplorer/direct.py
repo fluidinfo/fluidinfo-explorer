@@ -13,6 +13,11 @@ from flask import g, session
 from fom.session import Fluid
 from fom.db import PRIMITIVE_CONTENT_TYPE
 
+try:
+    import json
+except ImportError:
+    import simplejson as json
+
 from fluiddbexplorer import extdirect
 
 
@@ -101,7 +106,10 @@ def TagValuesFetch(oid):
             try:
                 tagresponse = g.fluid.objects[oid][tag].get()
                 if tagresponse.content_type.startswith(PRIMITIVE_CONTENT_TYPE):
-                    value = str(tagresponse.value)
+                    if isinstance(tagresponse.value, list):
+                        value = json.dumps(tagresponse.value)
+                    else:
+                        value = str(tagresponse.value)
                     readonly = False
                 else:
                     value = '(Opaque value)'
