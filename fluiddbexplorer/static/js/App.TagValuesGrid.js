@@ -63,7 +63,8 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 		this.plugins = [this.action];
 		App.TagValuesGrid.superclass.initComponent.call(this);
 
-		this.on('cellclick', this.onCellClick, this);
+		// TODO: See why cellclick can't be used (like App.ResultsGrid)
+		this.on('cellmousedown', this.onCellClick, this);
 	}
 	,afterRender: function(){
 		App.TagValuesGrid.superclass.afterRender.apply(this, arguments);
