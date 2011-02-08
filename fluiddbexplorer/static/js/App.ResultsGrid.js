@@ -1,11 +1,11 @@
 App.ResultsGrid = Ext.extend(Ext.grid.GridPanel, {
 	border: false
+	,hideMode: 'offsets'
 	,closable: true
 	,title: 'Query results'
 	,loadMask: true
 	,query: null
 	,iconCls: 'icon-tab-results'
-	,viewConfig: {emptyText: 'Nothing to display'}
 	,initComponent: function(){
 		this.sm = new Ext.grid.RowSelectionModel({singleSelect:true});
 		this.store = new Ext.data.DirectStore({
@@ -31,6 +31,10 @@ App.ResultsGrid = Ext.extend(Ext.grid.GridPanel, {
 			,{id:'oid', header:'Object ID', width: 230, dataIndex: 'oid', sortable: true}
 			,{header: 'About tag', width: 600, dataIndex: 'about', sortable: true, renderer: {fn: this.aboutTagRenderer, scope: this}}
 		];
+		this.view = new Ext.ux.grid.BufferView({
+			scrollDelay: false
+			,emptyText: 'Nothing to display'
+		});
 		this.plugins = [this.action];
 		App.ResultsGrid.superclass.initComponent.call(this);
 
