@@ -19,7 +19,7 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 			,reader: new Ext.data.JsonReader({
 				root: 'tags'
 				,idProperty: 'tag'
-				,fields: ['ns', 'tag', 'value', 'readonly']
+				,fields: ['ns', 'tag', 'value', 'readonly', 'type']
 			})
 		});
 		this.view = new Ext.grid.GroupingView({
@@ -53,7 +53,6 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 			]
 			,isCellEditable: function(col, row) {
 				var record = gridstore.getAt(row);
-				console.log(record);
 				if (record.get('readonly')) {
 					return false;
 				}
@@ -64,6 +63,8 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 		this.plugins = [this.action];
 		App.TagValuesGrid.superclass.initComponent.call(this);
 
+		// TODO: See why cellclick can't be used (like App.ResultsGrid)
+		this.on('cellmousedown', this.onCellClick, this);
 	}
 	,afterRender: function(){
 		App.TagValuesGrid.superclass.afterRender.apply(this, arguments);
@@ -73,7 +74,6 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 		}
 
 		this.on('afteredit', this.onAfterEdit, this);
-
 		this.body.on('click', this.onClick, this);
 	}
 	,onAfterEdit: function(e){
@@ -103,28 +103,38 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 		direct.DeleteTagValue(this.oid, r.data.tag, function(){g.store.remove(r);});
 	}
 	,setTag: function(r){
+		r.set('type', 'primitive');
 		r.set('value', '<em>loading...</em>');
 		oid = this.oid;
 		direct.GetTagValue(oid, r.data.tag, function(json){
-			if (json.type == 'primitive') {
+			type = json.type;
+
+			if (type == 'primitive') {
 				value = json.value;
 			}
-			else if (json.type == 'empty') {
+			else if (type == 'empty') {
 				// TODO: Add color and/or icon
 				value = 'empty';
 			}
-			else if (json.type == 'opaque') {
+			else if (type == 'opaque') {
 				value = 'Opaque value with content-type: "' + json.value + '" <a href="http://' + App.Config.baseurl_instance + '/objects/'+oid+'/'+r.data.tag+'" target="_blank">open</a>';
 			}
 			else {
-				value = 'Unsupported type: "' + json.type + '"';
+				value = 'Unsupported type: "' + type + '"';
 			}
 			r.set('value', value);
+			r.set('type', type);
 			r.set('readonly', json.readonly);
 			r.commit();
 		});
 	}
-	,valueRenderer: function(value, metaData) {
+	,valueRenderer: function(value, metaData, rec) {
+		type = rec.data.type;
+		if (type == 'notfetch') {
+			metaData.css = 'gridclicktofetch';
+			return 'Click to load tag value';
+		}
+
 		if (value.match(/^https?:\/\//)) {
 			return '<a href="' + value + '" target="_blank">' + value + '</a>';
 		}
@@ -134,6 +144,16 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 		}
 
 		return value;
+	}
+	,onCellClick: function(grid, rowIndex, columnIndex, e) {
+		if (columnIndex != 3) {
+			return;
+		}
+
+		var rec = grid.getStore().getAt(rowIndex);
+		if (rec.data.type == 'notfetch') {
+			this.setTag(rec);
+		}
 	}
 	,onClick: function(e, target) {
 		if (target = e.getTarget('.openobject', 2)) {

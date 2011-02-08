@@ -14,7 +14,7 @@ App.ResultsGrid = Ext.extend(Ext.grid.GridPanel, {
 			,paramOrder: 'query'
 			,autoDestroy: true
 			,root: 'ids'
-			,fields: ['oid', 'about']
+			,fields: ['oid', 'about', 'type']
 		});
 		this.tbar = [
 			{text:'Refresh',iconCls:'icon-refresh',scope:this,handler:this.doRefresh}
@@ -34,14 +34,35 @@ App.ResultsGrid = Ext.extend(Ext.grid.GridPanel, {
 		this.plugins = [this.action];
 		App.ResultsGrid.superclass.initComponent.call(this);
 
-		this.doRefresh();
 		this.on('rowdblclick', this.onRowDblClick, this);
+		this.on('cellclick', this.onCellClick, this);
 	}
-	,aboutTagRenderer: function(value, metaData) {
+	,afterRender: function(){
+		App.ResultsGrid.superclass.afterRender.apply(this, arguments);
+
+		this.doRefresh();
+	}
+	,aboutTagRenderer: function(value, metaData, rec) {
+		type = rec.data.type;
+		if (type == 'notfetch') {
+			metaData.css = 'gridclicktofetch';
+			return 'Click to show about tag';
+		}
+
 		if (value.match(/^https?:\/\//)) {
 			value = '<a href="' + value + '" target="_blank">' + value + '</a>';
 		}
 		return value;
+	}
+	,onCellClick: function(grid, rowIndex, columnIndex, e) {
+		if (columnIndex != 2) {
+			return;
+		}
+
+		var rec = grid.getStore().getAt(rowIndex);
+		if (rec.data.type == 'notfetch') {
+			this.setAboutTag(rec);
+		}
 	}
 	,execQuery: function(a){
 		this.store.load({params: {query:a}});
@@ -64,6 +85,7 @@ App.ResultsGrid = Ext.extend(Ext.grid.GridPanel, {
 		this.setAboutTag(r);
 	}
 	,setAboutTag: function(r){
+		r.set('type', 'primitive');
 		r.set('about', '<em>loading...</em>');
 		direct.GetTagValue(r.data.oid, "fluiddb/about", function(json){
 			r.set('about', json.value);

@@ -77,17 +77,23 @@ def Query(querystr):
     showAbout = False if len(ids) > limit_abouttag else True
 
     for objid in ids:
+
         k = k + 1
         if k == limit:
             break
+
         if showAbout:
             try:
                 about = g.fluid.objects[objid]['fluiddb/about'].get().value
+                type = 'primitive'
             except:
                 about = 'no about tag'
+                type = 'empty'
         else:
-            about = 'too many objects (more than %i) to fetch about tag' % (limit_abouttag,)
-        out.append({'oid': objid, 'about': about})
+            about = ''
+            type = 'notfetch'
+        out.append({'oid': objid, 'about': about, 'type': type})
+
     return {'ids': out}
 
 @extdirect.register()
@@ -97,11 +103,15 @@ def TagValuesFetch(oid):
     k = 0
     tags = response.value['tagPaths']
     showTagValue = False if len(tags) > 10 else True
+
     for tag in tags:
+
         k = k + 1
         if k == 200:
             break
+
         readonly = True
+
         if showTagValue:
             try:
                 tagresponse = g.fluid.objects[oid][tag].get()
@@ -110,16 +120,21 @@ def TagValuesFetch(oid):
                         value = json.dumps(tagresponse.value)
                     else:
                         value = str(tagresponse.value)
+                    type = 'primitive'
                     readonly = False
                 else:
                     value = '(Opaque value)'
+                    type = 'opaque'
             except:
                 value = '...request error...'
+                type = 'error'
         else:
-            value = "Too many tags to fetch values"
+            value = ''
+            type = 'notfetch'
 
         ns = tag.split("/")[0]
-        out.append({'ns': ns, 'tag': tag, 'value': value, 'readonly': readonly})
+        out.append({'ns': ns, 'tag': tag, 'value': value, 'readonly': readonly, 'type': type})
+
     return {'tags': out}
 
 
@@ -127,6 +142,7 @@ def TagValuesFetch(oid):
 def GetTagValue(oid, tag):
     readonly = True
     tagresponse = g.fluid.objects[oid][tag].get()
+
     if tagresponse.content_type.startswith(PRIMITIVE_CONTENT_TYPE):
         if tagresponse.value is None:
             type = 'empty'
@@ -139,6 +155,7 @@ def GetTagValue(oid, tag):
     else:
         type = 'opaque'
         value = tagresponse.content_type
+
     return {'type': type, 'value': value, 'readonly': readonly}
 
 
