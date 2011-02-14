@@ -212,7 +212,8 @@ def AboutToID(about):
 
 @extdirect.register(flags={'formHandler': True})
 def Login(username, password):
-    flogin = Fluid()
+    instance = session.get('instance', 'fluiddb')
+    flogin = Fluid(get_instance_url(instance))
     flogin.login(username, password)
 
     try:
