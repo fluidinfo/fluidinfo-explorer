@@ -83,11 +83,19 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 		direct.TagObject(this.oid, tag, value, function(){e.record.commit();});
 	}
 	,onAddTag: function(){
-		var tag = window.prompt('Please enter full tag path');
-		var value = window.prompt('Value');
-
 		store = this.store;
-		direct.TagObject(this.oid, tag,  value, function(){store.reload();});
+		oid = this.oid;
+		
+		Ext.Msg.prompt('Tag', 'Please enter full tag path', function(btn, tag){
+			if (btn == 'ok') {
+				Ext.Msg.prompt('Value', 'Value', function(btn, value){
+					if (btn == 'ok') {
+						direct.TagObject(oid, tag,  value, function(){store.reload();});
+					}
+				});
+			}
+		});
+
 	}
 	,onLoadAllTags: function(a){
 		this.store.each(function(r){
