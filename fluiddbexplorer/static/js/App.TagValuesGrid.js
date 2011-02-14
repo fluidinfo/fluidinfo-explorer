@@ -104,7 +104,7 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 	}
 	,onDeleteTag: function(g, r, action, row, col){
 		r.set('value', '<em>removing tag...</em>');
-		direct.DeleteTagValue(this.oid, r.data.tag, function(){g.store.remove(r);});
+		direct.DeleteTagValue(this.oid, r.data.tag, function(a,b){if (b.status) g.store.remove(r); else r.commit();});
 	}
 	,setTag: function(r){
 		r.set('type', 'primitive');
