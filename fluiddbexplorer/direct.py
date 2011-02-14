@@ -212,10 +212,19 @@ def AboutToID(about):
 
 @extdirect.register(flags={'formHandler': True})
 def Login(username, password):
-    session['logged'] = True
-    session['username'] = username
-    session['password'] = password
-    return {'success': True}
+    flogin = Fluid()
+    flogin.login(username, password)
+
+    try:
+        response = flogin.namespaces[username].get()
+
+        session['logged'] = True
+        session['username'] = username
+        session['password'] = password
+        return {'success': True}
+
+    except:
+        return {'success': False}
 
 @extdirect.register()
 def Logout():
