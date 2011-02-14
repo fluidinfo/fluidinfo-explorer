@@ -47,7 +47,7 @@ App.LoginWindow = Ext.extend(Ext.Window, {
 			loginWindow.el.mask('Please wait...', 'x-mask-loading');
 			form.submit({
 				success: function(r, o){loginWindow.el.unmask();loginWindow.fireEvent('logged', form.findField('username').getValue());}
-				,failure: function(r, o){loginWindow.el.unmask();Ext.Msg.alert('Failed', 'Something wrong happend');}
+				,failure: function(r, o){loginWindow.el.unmask();Ext.Msg.alert('Failed', 'Login failed');}
 			});
 
 		}
