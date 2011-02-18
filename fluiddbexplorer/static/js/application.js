@@ -4,7 +4,6 @@ Ext.BLANK_IMAGE_URL = '/static/extjs/resources/images/default/s.gif';
 Ext.onReady(function() {
 	Ext.QuickTips.init();
 
-	sidePanel = new App.NamespacesTree();
 
 	var queryId = Ext.id();
 	var loginId = Ext.id();
@@ -30,9 +29,11 @@ Ext.onReady(function() {
 		]
 	};
 
+	// Refactor to initialise only when needed
+	sidePanel = new App.NamespacesTree({region: 'west', border: true, margins: '5 0 5 5', collapsible: true, collapseMode: 'mini', split: true, minSize: 100, maxSize: 400, width: 240, layout: 'fit'});
 	if (App.Config.rootid != 'nstree-disabled') {
 		viewport_config.items.push({region: 'center', border: true, margins: '5 5 5 0', layout: 'fit', items: mainPanel});
-		viewport_config.items.push({region: 'west', border: true, margins: '5 0 5 5', collapsible: true, collapseMode: 'mini', hideCollapseTool:true, split: true, minSize: 100, maxSize: 400, width: 240, layout: 'fit', items: sidePanel});
+		viewport_config.items.push(sidePanel);
 	}
 	else {
 		viewport_config.items.push({region: 'center', border: true, margins: '5 5 5 5', layout: 'fit', items: mainPanel});
