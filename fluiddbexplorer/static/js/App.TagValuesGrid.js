@@ -24,7 +24,7 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 		});
 		this.view = new Ext.grid.GroupingView({
 			forceFit: true
-			,groupTextTpl: '{text} ({[values.rs.length]} {[values.rs.length > 1 ? "Items" : "Item"]})'
+			,groupTextTpl: '{group} ({[values.rs.length]} {[values.rs.length > 1 ? "tags" : "tag"]})'
 			,emptyText: 'Nothing to display'
 		});
 		this.tbar = [
