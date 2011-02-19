@@ -64,6 +64,28 @@ def splash(instance):
                                rootid='nstree-disabled')
 
 
+@app.route('/<instance>/object/<objectid>')
+def openobjectid(instance, objectid):
+    session['instance'] = instance
+    return render_template("index.html",
+                           username=session.get('username', 'Anonymous'),
+                           rootlabel='Fluidinfo',
+                           instance=instance,
+                           rootid='nstree-disabled',
+                           autoopenobject=objectid)
+
+
+@app.route('/<instance>/about/<about>')
+def openabout(instance, about):
+    session['instance'] = instance
+    return render_template("index.html",
+                           username=session.get('username', 'Anonymous'),
+                           rootlabel='Fluidinfo',
+                           instance=instance,
+                           rootid='nstree-disabled',
+                           autoopenabout=about)
+
+
 @app.route('/<instance>/<path:rootns>')
 def main(instance, rootns):
     session['instance'] = instance
