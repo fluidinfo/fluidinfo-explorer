@@ -141,7 +141,7 @@ def GetTagValue(oid, tag):
     try:
         tagresponse = g.fluid.objects[oid][tag].get()
     except Fluid404Error:
-        return {'type': 'error', 'value': 'No about tag'}
+        return {'type': 'error', 'value': ''}
 
     if tagresponse.content_type.startswith(PRIMITIVE_CONTENT_TYPE):
         if tagresponse.value is None:
