@@ -4,6 +4,8 @@ App.NamespacesTree = Ext.extend(Ext.tree.TreePanel, {
 	,animate: false
 	,border: false
 	,title: 'Namespaces'
+	,ddGroup: 'tagDD'
+	,enableDrag: true
 	,root: {nodeType: 'async', text: App.Config.rootlabel, id: App.Config.rootid, draggable: false}
 	,initComponent: function(){
 		this.addEvents({
