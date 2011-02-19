@@ -22,6 +22,7 @@ Ext.onReady(function() {
 			,items: [
 				{xtype: 'box', el: 'logo', border: false}
 				,{border: false, flex: 1}
+				,{xtype: 'app.createobject'}
 				,{xtype: 'app.queryfield', id: queryId}
 				,{xtype: 'app.login', id: loginId}
 			]

@@ -12,6 +12,7 @@ Ext.Direct functions
 from flask import g, session
 from fom.session import Fluid
 from fom.db import PRIMITIVE_CONTENT_TYPE
+from fom.errors import Fluid404Error
 
 try:
     import json
@@ -136,7 +137,11 @@ def TagValuesFetch(oid):
 @extdirect.register()
 def GetTagValue(oid, tag):
     readonly = True
-    tagresponse = g.fluid.objects[oid][tag].get()
+
+    try:
+        tagresponse = g.fluid.objects[oid][tag].get()
+    except Fluid404Error:
+        return {'type': 'error', 'value': 'No about tag'}
 
     if tagresponse.content_type.startswith(PRIMITIVE_CONTENT_TYPE):
         if tagresponse.value is None:
@@ -203,6 +208,13 @@ def SetPerm(type, action, path, policy, exceptions):
 @extdirect.register()
 def AboutToID(about):
     return g.fluid.about[about].get().value['id']
+
+@extdirect.register()
+def CreateObject(about):
+    if about == "":
+        about = None
+    response = g.fluid.objects.post(about)
+    return response.value['id']
 
 @extdirect.register(flags={'formHandler': True})
 def Login(username, password):
