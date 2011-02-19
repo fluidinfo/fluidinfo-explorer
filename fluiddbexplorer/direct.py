@@ -101,16 +101,10 @@ def Query(querystr):
 def TagValuesFetch(oid):
     response = g.fluid.objects[oid].get()
     out = []
-    k = 0
     tags = response.value['tagPaths']
     showTagValue = False if len(tags) > 10 else True
 
     for tag in tags:
-
-        k = k + 1
-        if k == 200:
-            break
-
         readonly = True
 
         if showTagValue:
