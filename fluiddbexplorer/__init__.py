@@ -65,6 +65,7 @@ def splash(instance):
 
 
 @app.route('/<instance>/object/<objectid>')
+@app.route('/<instance>/objects/<objectid>')
 def openobjectid(instance, objectid):
     session['instance'] = instance
     return render_template("index.html",
