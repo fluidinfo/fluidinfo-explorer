@@ -75,6 +75,29 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 
 		this.on('afteredit', this.onAfterEdit, this);
 		this.body.on('click', this.onClick, this);
+
+		thisComponent = this;
+
+		var panelDropTargetEl = this.getView().scroller.dom;
+
+		var panelDropTarget = new Ext.dd.DropTarget(panelDropTargetEl, {
+			ddGroup : 'tagDD',
+			notifyDrop : function(ddSource, e, data){
+				var attr = ddSource.dragData.node.attributes;
+				var tag = attr.id.replace(/^tag-/, '');
+
+				if (attr.leaf == false) {
+					return false;
+				}
+
+				Ext.Msg.prompt('Value', 'Value', function(btn, value){
+					if (btn == 'ok') {
+						direct.TagObject(thisComponent.oid, tag,  value, function(){thisComponent.store.reload();});
+					}
+				});
+			}
+		});
+
 	}
 	,onAfterEdit: function(e){
 		var tag = e.record.data.tag;
@@ -85,7 +108,7 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 	,onAddTag: function(){
 		store = this.store;
 		oid = this.oid;
-		
+
 		Ext.Msg.prompt('Tag', 'Please enter full tag path', function(btn, tag){
 			if (btn == 'ok') {
 				Ext.Msg.prompt('Value', 'Value', function(btn, value){
