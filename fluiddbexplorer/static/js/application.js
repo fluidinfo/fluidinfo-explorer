@@ -92,6 +92,16 @@ Ext.onReady(function() {
 		}
 	});
 
+	if (App.Config.autoopenabout) {
+		direct.AboutToID(App.Config.autoopenabout, function(oid){
+			Ext.getCmp('mainpanel').openObject(oid);
+		});
+	}
+
+	if (App.Config.autoopenobject) {
+		Ext.getCmp('mainpanel').openObject(App.Config.autoopenobject);
+	}
+
 	Ext.Msg.minWidth = 300;
 	Ext.Ajax.on('requestexception', function(conn, response, options){
 		json = Ext.util.JSON.decode(response.responseText);
