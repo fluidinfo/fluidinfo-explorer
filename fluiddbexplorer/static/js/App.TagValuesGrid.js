@@ -30,6 +30,7 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 			{text: 'Refresh', iconCls: 'icon-refresh', handler: this.onRefresh, scope: this}
 			,{text: 'Load all tag values', iconCls: 'icon-fetch-all', handler: this.onLoadAllTags, scope: this}
 			,{text: 'Add a tag', iconCls: 'icon-tag-add', handler: this.onAddTag, scope: this}
+			,{text: 'Info', iconCls: 'icon-info', handler: this.onInfo, scope: this}
 			,'-'
 			,{text: 'View visual representation', iconCls: 'icon-eye', handler: function(){ window.open("http://abouttag.appspot.com/id/butterfly/"+this.oid);}, scope: this}
 		];
@@ -179,6 +180,10 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 		}
 
 		return value;
+	}
+	,onInfo: function() {
+		win = new App.ObjectInfoWindow({oid: this.oid});
+		win.show();
 	}
 	,onCellClick: function(grid, rowIndex, columnIndex, e) {
 		if (columnIndex != 3) {
