@@ -1,7 +1,6 @@
 App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 	border: false
 	,closable: true
-	,title: 'Tag values'
 	,loadMask: true
 	,oid: null
 	,initComponent: function(){
