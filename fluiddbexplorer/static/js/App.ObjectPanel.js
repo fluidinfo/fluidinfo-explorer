@@ -5,7 +5,7 @@ App.ObjectPanel = Ext.extend(Ext.Panel, {
 	,layout: 'vbox'
 	,initComponent: function(){
 		this.items = [
-			new App.TagValuesGrid({oid: this.oid, flex: 1})
+			{xtype: 'app.tagvaluesgrid', oid: this.oid, flex: 1}
 		];
 		this.title = 'Object ' + this.oid.split('-')[0];
 		this.tabTip = this.oid;

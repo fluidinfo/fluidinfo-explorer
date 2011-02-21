@@ -34,7 +34,8 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 			,{text: 'View visual representation', iconCls: 'icon-eye', handler: function(){ window.open("http://abouttag.appspot.com/id/butterfly/"+this.oid);}, scope: this}
 		];
 		this.action = new Ext.ux.grid.RowActions({
-			actions: [
+			header: 'Actions'
+			,actions: [
 				{iconCls: 'icon-refresh', tooltip: 'Load tag value'}
 				,{iconCls: 'icon-tag-remove', tooltip: 'Remove tag'}
 			]
