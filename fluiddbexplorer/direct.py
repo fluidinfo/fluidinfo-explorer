@@ -115,7 +115,7 @@ def TagValuesFetch(oid):
                     if isinstance(tagresponse.value, list):
                         value = json.dumps(tagresponse.value)
                     else:
-                        value = str(tagresponse.value)
+                        value = unicode(tagresponse.value)
                     type = 'primitive'
                     readonly = False
                 else:
@@ -153,7 +153,7 @@ def GetTagValue(oid, tag):
             if isinstance(tagresponse.value, list):
                 value = json.dumps(tagresponse.value)
             else:
-                value = str(tagresponse.value)
+                value = unicode(tagresponse.value)
             readonly = False
     else:
         type = 'opaque'
