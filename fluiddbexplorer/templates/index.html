@@ -70,6 +70,9 @@ var _gaq=_gaq||[];_gaq.push(['_setAccount','{{ config.GOOGLE_ANALYTICS_CODE }}']
 {% if autoopenabout %}
 	App.Config.autoopenabout = "{{ autoopenabout }}";
 {% endif %}
+{% if autoopenquery %}
+	App.Config.autoopenquery = "{{ autoopenquery|safe }}";
+{% endif %}
 
 	App.Config.baseurl_instance = "{{ instance }}.fluidinfo.com";
 {% if config.GOOGLE_ANALYTICS_CODE %}

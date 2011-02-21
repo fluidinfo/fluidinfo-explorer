@@ -103,6 +103,10 @@ Ext.onReady(function() {
 		Ext.getCmp('mainpanel').openObject(App.Config.autoopenobject);
 	}
 
+	if (App.Config.autoopenquery) {
+		openResultsGrid(App.Config.autoopenquery);
+	}
+
 	Ext.Msg.minWidth = 300;
 	Ext.Ajax.on('requestexception', function(conn, response, options){
 		json = Ext.util.JSON.decode(response.responseText);

@@ -8,7 +8,7 @@
 """
 
 import os
-from flask import Flask, abort, redirect, render_template, session, url_for
+from flask import Flask, abort, redirect, render_template, request, session, url_for
 
 from flaskext.extdirect import ExtDirect
 from fluiddbexplorer import local_settings
@@ -62,6 +62,20 @@ def splash(instance):
                                rootlabel='Fluidinfo',
                                instance=instance,
                                rootid='nstree-disabled')
+
+
+@app.route('/<instance>/objects')
+def openquery(instance):
+    session['instance'] = instance
+    query = request.args.get('query', '')
+    query = query.replace('"', '\\"')
+
+    return render_template("index.html",
+                           username=session.get('username', 'Anonymous'),
+                           rootlabel='Fluidinfo',
+                           instance=instance,
+                           rootid='nstree-disabled',
+                           autoopenquery=query)
 
 
 @app.route('/<instance>/object/<objectid>')
