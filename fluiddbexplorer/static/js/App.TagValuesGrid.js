@@ -36,6 +36,7 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 		];
 		this.action = new Ext.ux.grid.RowActions({
 			header: 'Actions'
+			,widthIntercept: 10
 			,actions: [
 				{iconCls: 'icon-refresh', tooltip: 'Load tag value'}
 				,{iconCls: 'icon-tag-remove', tooltip: 'Remove tag'}
