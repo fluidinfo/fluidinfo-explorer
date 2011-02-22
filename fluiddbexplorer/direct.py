@@ -114,9 +114,10 @@ def TagValuesFetch(oid):
                 if tagresponse.content_type.startswith(PRIMITIVE_CONTENT_TYPE):
                     if isinstance(tagresponse.value, list):
                         value = json.dumps(tagresponse.value)
+                        type = 'primitivelist'
                     else:
                         value = unicode(tagresponse.value)
-                    type = 'primitive'
+                        type = 'primitive'
                     readonly = False
                 else:
                     value = '(Opaque value)'
@@ -149,10 +150,11 @@ def GetTagValue(oid, tag):
             value = 'Empty'
             readonly = False
         else:
-            type = 'primitive'
             if isinstance(tagresponse.value, list):
+                type = 'primitivelist'
                 value = json.dumps(tagresponse.value)
             else:
+                type = 'primitive'
                 value = unicode(tagresponse.value)
             readonly = False
     else:
