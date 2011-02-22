@@ -140,13 +140,13 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 		direct.DeleteTagValue(this.oid, r.data.tag, function(a,b){if (b.status) g.store.remove(r); else r.commit();});
 	}
 	,setTag: function(r){
-		r.set('type', 'loading');
-		// r.set('value', '<em>loading...</em>');
+		r.set('type', 'primitive');
+		r.set('value', '<em>loading...</em>');
 		oid = this.oid;
 		direct.GetTagValue(oid, r.data.tag, function(json){
 			type = json.type;
 
-			if (type == 'primitive' || type == 'primitivelist') {
+			if (type == 'primitive') {
 				value = json.value;
 			}
 			else if (type == 'empty') {
@@ -159,9 +159,9 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 			else {
 				value = 'Unsupported type: "' + type + '"';
 			}
-			r.set('readonly', json.readonly);
-			r.set('type', type);
 			r.set('value', value);
+			r.set('type', type);
+			r.set('readonly', json.readonly);
 			r.commit();
 		});
 	}
@@ -170,33 +170,6 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 		if (type == 'notfetch') {
 			metaData.css = 'gridclicktofetch';
 			return 'Click to load tag value';
-		}
-		if (type == 'loading') {
-			return '<em>loading...</em>';
-		}
-
-		if (type == 'primitivelist') {
-			json = Ext.util.JSON.decode(value);
-			out = [];
-			for (item in json) {
-				value = json[item];
-
-				if (typeof(value) == 'function') {
-					continue;
-				}
-				if (typeof(value) == 'string') {
-					if (value.match(/^https?:\/\//)) {
-						value = '<a href="' + value + '" target="_blank">' + value + '</a>';
-					}
-					else if (value.match(/^([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}$/)) {
-						value = '<a href="#" expl:objectid="' + value + '" class="openobject">' + value + '</a>';
-					}
-				}
-
-				out.push(value);
-			}
-
-			return '["' + out.join('","') + '"]';
 		}
 
 		if (value.match(/^https?:\/\//)) {
