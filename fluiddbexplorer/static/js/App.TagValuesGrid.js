@@ -136,17 +136,25 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 		this.setTag(r);
 	}
 	,onDeleteTag: function(g, r, action, row, col){
-		r.set('value', '<em>removing tag...</em>');
-		direct.DeleteTagValue(this.oid, r.data.tag, function(a,b){if (b.status) g.store.remove(r); else r.commit();});
+		r.beginEdit();
+		r.set('type', 'special');
+		r.set('value', 'Removing tag...');
+		r.endEdit();
+
+		direct.DeleteTagValue(this.oid, r.data.tag, function(a,b){if (b.status) g.store.remove(r); else r.reject();});
 	}
 	,setTag: function(r){
-		r.set('type', 'primitive');
-		r.set('value', '<em>loading...</em>');
+		r.beginEdit();
+		r.set('type', 'special');
+		r.set('value', 'Loading...');
+		r.endEdit();
+
 		oid = this.oid;
+
 		direct.GetTagValue(oid, r.data.tag, function(json){
 			type = json.type;
 
-			if (type == 'primitive') {
+			if (type == 'primitive' || type == 'primitivelist') {
 				value = json.value;
 			}
 			else if (type == 'empty') {
@@ -159,17 +167,49 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 			else {
 				value = 'Unsupported type: "' + type + '"';
 			}
-			r.set('value', value);
-			r.set('type', type);
+
+			r.beginEdit();
 			r.set('readonly', json.readonly);
+			r.set('type', type);
+			r.set('value', value);
+			r.endEdit();
 			r.commit();
 		});
 	}
 	,valueRenderer: function(value, metaData, rec) {
 		type = rec.data.type;
+
 		if (type == 'notfetch') {
 			metaData.css = 'gridclicktofetch';
 			return 'Click to load tag value';
+		}
+
+		if (type == 'special') {
+			return value;
+		}
+
+		if (type == 'primitivelist') {
+			json = Ext.util.JSON.decode(value);
+			out = [];
+			for (item in json) {
+				value = json[item];
+
+				if (typeof(value) == 'function') {
+					continue;
+				}
+				if (typeof(value) == 'string') {
+					if (value.match(/^https?:\/\//)) {
+						value = '<a href="' + value + '" target="_blank">' + value + '</a>';
+					}
+					else if (value.match(/^([0-9a-fA-F]){8}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){4}-([0-9a-fA-F]){12}$/)) {
+						value = '<a href="#" expl:objectid="' + value + '" class="openobject">' + value + '</a>';
+					}
+				}
+
+				out.push(value);
+			}
+
+			return '["' + out.join('", "') + '"]';
 		}
 
 		if (value.match(/^https?:\/\//)) {
