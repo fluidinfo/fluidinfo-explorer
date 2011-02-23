@@ -136,11 +136,19 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 		this.setTag(r);
 	}
 	,onDeleteTag: function(g, r, action, row, col){
-		r.set('value', '<em>removing tag...</em>');
-		direct.DeleteTagValue(this.oid, r.data.tag, function(a,b){if (b.status) g.store.remove(r); else r.commit();});
+		r.beginEdit();
+		r.set('type', 'special');
+		r.set('value', 'Removing tag...');
+		r.endEdit();
+
+		direct.DeleteTagValue(this.oid, r.data.tag, function(a,b){if (b.status) g.store.remove(r); else r.reject();});
 	}
 	,setTag: function(r){
-		r.set('type', 'loading');
+		r.beginEdit();
+		r.set('type', 'special');
+		r.set('value', 'Loading...');
+		r.endEdit();
+
 		oid = this.oid;
 
 		direct.GetTagValue(oid, r.data.tag, function(json){
@@ -176,8 +184,8 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 			return 'Click to load tag value';
 		}
 
-		if (type == 'loading') {
-			return 'Loading...';
+		if (type == 'special') {
+			return value;
 		}
 
 		if (type == 'primitivelist') {
