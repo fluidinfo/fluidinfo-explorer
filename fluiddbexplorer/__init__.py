@@ -61,6 +61,7 @@ def splash(instance):
                                username=username,
                                rootlabel='Fluidinfo',
                                instance=instance,
+                               baseurl_instance=direct.get_instance_url(instance),
                                rootid='nstree-disabled')
 
 
@@ -72,6 +73,7 @@ def openobjectid(instance, objectid):
                            username=session.get('username', 'Anonymous'),
                            rootlabel='Fluidinfo',
                            instance=instance,
+                           baseurl_instance=direct.get_instance_url(instance),
                            rootid='nstree-disabled',
                            autoopenobject=objectid)
 
@@ -83,6 +85,7 @@ def openabout(instance, about):
                            username=session.get('username', 'Anonymous'),
                            rootlabel='Fluidinfo',
                            instance=instance,
+                           baseurl_instance=direct.get_instance_url(instance),
                            rootid='nstree-disabled',
                            autoopenabout=about)
 
@@ -95,4 +98,5 @@ def main(instance, rootns):
                            username=session.get('username', 'Anonymous'),
                            rootlabel=rootns,
                            instance=instance,
+                           baseurl_instance=direct.get_instance_url(instance),
                            rootid=(rootns or 'nstree-disabled'))
