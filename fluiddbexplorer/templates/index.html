@@ -92,6 +92,9 @@
 {% if autoopenabout %}
 	App.Config.autoopenabout = "{{ autoopenabout }}";
 {% endif %}
+{% if autoopenquery %}
+	App.Config.autoopenquery = "{{ autoopenquery|safe }}";
+{% endif %}
 
 	App.Config.baseurl_instance = "{{ baseurl_instance }}";
 {% if config.GOOGLE_ANALYTICS_CODE %}
