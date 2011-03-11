@@ -95,11 +95,11 @@ App.NamespacesTree = Ext.extend(Ext.tree.TreePanel, {
 			if (!this.ctxMenuTag) {
 				this.ctxMenuTag = new Ext.menu.Menu({
 					items: [
-						{id: 'ns-openobject', text: 'Open object'}
+						{itemId: 'ns-openobject', text: 'Open object'}
 						,'-'
-						,{id: 'ns-delete-tag', text: 'Delete tag'}
+						,{itemId: 'ns-delete-tag', text: 'Delete tag'}
 						,'-'
-						,{id: 'ns-permission', text: 'Permissions'}
+						,{itemId: 'ns-permission', text: 'Permissions'}
 					]
 					,listeners: {itemclick: this.ctxMenuHandler}
 				});
@@ -113,14 +113,14 @@ App.NamespacesTree = Ext.extend(Ext.tree.TreePanel, {
 			if (!this.ctxMenuNS) {
 				this.ctxMenuNS = new Ext.menu.Menu({
 					items: [
-						{id: 'ns-openobject', text: 'Open object'}
+						{itemId: 'ns-openobject', text: 'Open object'}
 						,'-'
-						,{id: 'ns-create-namespace', text: 'Create new namespace'}
-						,{id: 'ns-delete-namespace', text: 'Delete namespace'}
+						,{itemId: 'ns-create-namespace', text: 'Create new namespace'}
+						,{itemId: 'ns-delete-namespace', text: 'Delete namespace'}
 						,'-'
-						,{id: 'ns-create-tag', text: 'Create new tag'}
+						,{itemId: 'ns-create-tag', text: 'Create new tag'}
 						,'-'
-						,{id: 'ns-permission', text: 'Permissions'}
+						,{itemId: 'ns-permission', text: 'Permissions'}
 
 					]
 					,listeners: {itemclick: this.ctxMenuHandler}
@@ -137,7 +137,7 @@ App.NamespacesTree = Ext.extend(Ext.tree.TreePanel, {
 		var node = i.parentMenu.contextNode;
 		var loader = node.getOwnerTree().getLoader();
 		var path = node.id.replace(/^(ns-|tag-)/, '');
-		switch (i.id) {
+		switch (i.itemId) {
 		case 'ns-create-namespace':
 			var namespace = window.prompt('Namespace name');
 			var desc = window.prompt('Description');
