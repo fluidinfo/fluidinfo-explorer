@@ -94,7 +94,8 @@ Ext.onReady(function() {
 	});
 
 	if (App.Config.autoopenabout) {
-		direct.AboutToID(App.Config.autoopenabout, function(oid){
+		about = App.Config.autoopenabout.replace('&#39;', "'");
+		direct.AboutToID(about, function(oid){
 			Ext.getCmp('mainpanel').openObject(oid);
 		});
 	}
