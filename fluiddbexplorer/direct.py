@@ -168,6 +168,18 @@ def GetTagValue(oid, tag):
 def TagObject(oid, tag, value):
     g.fluid.objects[oid][tag].put(value)
 
+@extdirect.register(flags={'formHandler': True})
+def TagObjectForm(oid, tag, value, type):
+    if type == 'int':
+        value = int(value)
+    elif type == 'float':
+        value = float(value)
+    elif type == 'list':
+        value = json.loads(value)
+
+    g.fluid.objects[oid][tag].put(value)
+    return {'success': True}
+
 @extdirect.register()
 def DeleteTagValue(oid, tag):
     g.fluid.objects[oid][tag].delete()
