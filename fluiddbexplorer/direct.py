@@ -174,6 +174,10 @@ def TagObjectForm(oid, tag, value, type):
         value = int(value)
     elif type == 'float':
         value = float(value)
+    elif type == 'bool':
+        value = False if value == '0' else True
+    elif type == 'none':
+        value = None
     elif type == 'list':
         value = json.loads(value)
 
