@@ -16,7 +16,7 @@ App.TagValueWindow = Ext.extend(Ext.Window, {
 			,api: {submit: direct.TagObjectForm}
 			,baseParams: {oid: this.oid}
 			,paramsAsHash: false
-			,paramOrder: ['oid', 'tag', 'value']
+			,paramOrder: ['oid', 'tag', 'value', 'type']
 			,defaultType: 'textfield'
 			,defaults: {
 				allowBlank: false
@@ -33,6 +33,7 @@ App.TagValueWindow = Ext.extend(Ext.Window, {
 			,items: [
 				{fieldLabel: 'Tag', name: 'tag', value: this.tag}
 				,{fieldLabel: 'Value', name: 'value'}
+				,{fieldLabel: 'Type', name: 'type', xtype: 'combo', hiddenName: 'type', mode: 'local', editable: false, typeAhead: false, allowBlank: false, triggerAction: 'all',  store: [['string', 'String'], ['int', 'Integer'], ['float', 'Floating point'], ['list', 'List']], value: 'string'}
 			]
 		}];
 		this.buttons = [
