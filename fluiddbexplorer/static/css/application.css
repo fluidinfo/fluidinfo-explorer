@@ -25,6 +25,7 @@ h1{font:bold 16px tahoma,arial,sans-serif;color:white;margin:0;padding-left:5px;
 .icon-tag-remove{background-image:url(../images/icons/tag_blue_delete.png)!important;}
 .icon-eye{background-image:url(../images/icons/eye.png)!important;}
 .icon-info{background-image:url(../images/icons/information.png)!important;}
+.icon-object-open{background-image:url(../images/icons/brick_go.png)!important;}
 
 #namespacestree .x-tree-node-leaf .x-tree-node-icon{background-image:url(../images/icons/tag_blue.png)!important;}
 

@@ -21,9 +21,15 @@ App.ResultsGrid = Ext.extend(Ext.grid.GridPanel, {
 			,{text:'Load all about tags',iconCls:'icon-fetch-all',scope:this,handler:this.onLoadAll}
 		];
 		this.action = new Ext.ux.grid.RowActions({
-			actions:[{iconCls:'icon-refresh',tooltip:'Refresh about tag'}]
+			header: 'Actions'
+			,widthIntercept: 10
+			,actions: [
+				{iconCls: 'icon-refresh', tooltip: 'Refresh about tag'}
+				,{iconCls: 'icon-object-open', tooltip: 'Open that object'}
+			]
 			,callbacks:{
 				'icon-refresh': this.onRefreshRow.createDelegate(this)
+				,'icon-object-open': this.onOpenObject.createDelegate(this)
 			}
 		});
 		this.columns = [
@@ -76,6 +82,9 @@ App.ResultsGrid = Ext.extend(Ext.grid.GridPanel, {
 			this.setTitle('Query results: "' + this.query + '"');
 			this.execQuery(this.query);
 		}
+	}
+	,onOpenObject: function(g, r){
+		Ext.getCmp('mainpanel').openObject(r.data.oid);
 	}
 	,onRowDblClick: function(grid, rowIndex, e){
 		var row = grid.store.getAt(rowIndex);
