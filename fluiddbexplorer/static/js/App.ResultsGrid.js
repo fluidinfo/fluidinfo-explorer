@@ -25,7 +25,7 @@ App.ResultsGrid = Ext.extend(Ext.grid.GridPanel, {
 			,widthIntercept: 10
 			,actions: [
 				{iconCls: 'icon-refresh', tooltip: 'Refresh about tag'}
-				,{iconCls: 'icon-object-open', tooltip: 'Open that object'}
+				,{iconCls: 'icon-object-open', tooltip: 'Display object'}
 			]
 			,callbacks:{
 				'icon-refresh': this.onRefreshRow.createDelegate(this)

@@ -33,7 +33,7 @@ App.TagValueWindow = Ext.extend(Ext.Window, {
 			,items: [
 				{fieldLabel: 'Tag', name: 'tag', value: this.tag}
 				,{fieldLabel: 'Value', name: 'value'}
-				,{fieldLabel: 'Type', name: 'type', xtype: 'combo', hiddenName: 'type', mode: 'local', editable: false, typeAhead: false, allowBlank: false, triggerAction: 'all',  store: [['string', 'String'], ['int', 'Integer'], ['float', 'Floating point'], ['list', 'List']], value: 'string'}
+				,{fieldLabel: 'Type', name: 'type', xtype: 'combo', hiddenName: 'type', mode: 'local', editable: false, typeAhead: false, allowBlank: false, triggerAction: 'all',  store: [['string', 'String'], ['int', 'Integer'], ['float', 'Floating point'], ['list', 'List of strings']], value: 'string'}
 			]
 		}];
 		this.buttons = [

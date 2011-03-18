@@ -58,11 +58,11 @@ App.PermPanel = Ext.extend(Ext.Panel, {
 
 		this.tbar = [
 			{text:'Policy toggle', iconCls: 'icon-toggle', scope: this, handler: this.onPolicyToggle}
-			,{xtype: 'tbtext', text:'Exceptions'}
-			,{text:'add', iconCls: 'icon-add', scope: this, handler: this.onAddException}
-			,{text:'delete', iconCls: 'icon-delete', scope: this, handler: this.onDeleteException}
+			,{xtype: 'tbtext', text:'Exceptions:'}
+			,{tooltip:'add', iconCls: 'icon-add', scope: this, handler: this.onAddException}
+			,{tooltip:'delete', iconCls: 'icon-delete', scope: this, handler: this.onDeleteException}
 			,'->'
-			,{text:'Commit', iconCls: 'icon-commit', scope: this, handler: this.onCommit}
+			,{tooltip:'Commit', iconCls: 'icon-commit', scope: this, handler: this.onCommit}
 		];
 		App.PermPanel.superclass.initComponent.call(this);
 	}
