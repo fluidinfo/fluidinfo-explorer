@@ -92,11 +92,12 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 					return false;
 				}
 
-				Ext.Msg.prompt('Value', 'Value', function(btn, value){
-					if (btn == 'ok') {
-						direct.TagObject(thisComponent.oid, tag,  value, function(){thisComponent.store.reload();});
-					}
+				var w = new App.TagValueWindow({oid: thisComponent.oid, tag: tag});
+				w.on('tagged', function(){
+					thisComponent.store.reload();
+					w.close();
 				});
+				w.show();
 			}
 		});
 
@@ -111,16 +112,12 @@ App.TagValuesGrid = Ext.extend(Ext.grid.EditorGridPanel, {
 		store = this.store;
 		oid = this.oid;
 
-		Ext.Msg.prompt('Tag', 'Please enter full tag path', function(btn, tag){
-			if (btn == 'ok') {
-				Ext.Msg.prompt('Value', 'Value', function(btn, value){
-					if (btn == 'ok') {
-						direct.TagObject(oid, tag,  value, function(){store.reload();});
-					}
-				});
-			}
+		var w = new App.TagValueWindow({oid: oid});
+		w.on('tagged', function(){
+			store.reload();
+			w.close();
 		});
-
+		w.show();
 	}
 	,onLoadAllTags: function(a){
 		this.store.each(function(r){
