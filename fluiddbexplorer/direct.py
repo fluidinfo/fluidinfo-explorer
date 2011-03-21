@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 """
-fluiddbexplorer.direct
-~~~~~~~~~~~~~~~~~~~~~~
+    fluiddbexplorer.direct
+    ~~~~~~~~~~~~~~~~~~~~~~
 
-Ext.Direct functions
+    Ext.Direct functions
 
-:copyright: 2010 by Fluidinfo Explorer Authors
-:license: MIT, see LICENSE for more information
+    :copyright: 2010 by Fluidinfo Explorer Authors
+    :license: MIT, see LICENSE for more information
 """
 
-from flask import current_app, g, session
+from flask import Module, current_app, g, session
 from fom.session import Fluid
 from fom.db import PRIMITIVE_CONTENT_TYPE
 from fom.errors import Fluid404Error
@@ -20,11 +20,16 @@ try:
 except ImportError:
     import simplejson as json
 
+from flaskext.extdirect import ExtDirect
+
 from fluiddbexplorer.utils import get_instance_url
-from fluiddbexplorer import extdirect
 
 
-@extdirect.app.before_request
+direct = Module(__name__)
+extdirect = ExtDirect(direct)
+
+
+@direct.before_request
 def setup_fluid():
     instance = session.get('instance', 'main')
     g.fluid = Fluid(get_instance_url(instance))

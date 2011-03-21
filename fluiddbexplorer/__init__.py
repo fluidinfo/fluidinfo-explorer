@@ -10,18 +10,14 @@
 from flask import Flask, abort, redirect, render_template, request, \
                   session, url_for
 
-from flaskext.extdirect import ExtDirect
-
 from fluiddbexplorer.utils import dated_url_for, get_instance_url
 from fluiddbexplorer import local_settings
+from fluiddbexplorer.direct import direct
+
 
 app = Flask(__name__)
 app.config.from_object(local_settings)
-extdirect = ExtDirect(app)
-
-
-from fluiddbexplorer import direct
-direct  # make pyflakes happy
+app.register_module(direct)
 
 
 @app.context_processor
