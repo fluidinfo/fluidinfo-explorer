@@ -9,7 +9,7 @@ Ext.Direct functions
 :license: MIT, see LICENSE for more information
 """
 
-from flask import g, session
+from flask import current_app, g, session
 from fom.session import Fluid
 from fom.db import PRIMITIVE_CONTENT_TYPE
 from fom.errors import Fluid404Error
@@ -63,15 +63,15 @@ def Query(querystr):
 
     out = []
     k = 0
-    limit = extdirect.app.config.get('QUERY_RESULTSET_LIMIT', 0)
-    limit_abouttag = extdirect.app.config.get('QUERY_ABOUTTAG_LIMIT', 0)
+    limit = current_app.config.get('QUERY_RESULTSET_LIMIT', None)
+    limit_abouttag = current_app.config.get('QUERY_ABOUTTAG_LIMIT', None)
     showAbout = False if len(ids) > limit_abouttag else True
 
     for objid in ids:
 
-        k = k + 1
         if k == limit:
             break
+        k = k + 1
 
         if showAbout:
             try:
