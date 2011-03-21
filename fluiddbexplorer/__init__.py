@@ -8,7 +8,8 @@
 """
 
 import os
-from flask import Flask, abort, redirect, render_template, request, session, url_for
+from flask import Flask, abort, redirect, render_template, request, \
+                  session, url_for
 
 from flaskext.extdirect import ExtDirect
 from fluiddbexplorer import local_settings
