@@ -7,11 +7,12 @@
     :license: MIT, see LICENSE for more information
 """
 
-import os
 from flask import Flask, abort, redirect, render_template, request, \
                   session, url_for
 
 from flaskext.extdirect import ExtDirect
+
+from fluiddbexplorer.utils import dated_url_for, get_instance_url
 from fluiddbexplorer import local_settings
 
 app = Flask(__name__)
@@ -20,21 +21,12 @@ extdirect = ExtDirect(app)
 
 
 from fluiddbexplorer import direct
+direct  # make pyflakes happy
 
 
 @app.context_processor
 def override_url_for():
     return dict(url_for=dated_url_for)
-
-
-def dated_url_for(endpoint, **values):
-    if endpoint == 'static':
-        filename = values.get('filename', None)
-        if filename:
-            file_path = os.path.join(app.root_path,
-                                     endpoint, filename)
-            values['q'] = int(os.stat(file_path).st_mtime)
-    return url_for(endpoint, **values)
 
 
 def render_index(instance="main", username=None,
@@ -48,7 +40,7 @@ def render_index(instance="main", username=None,
                            username=username,
                            rootlabel=rootlabel,
                            instance=instance,
-                           baseurl_instance=direct.get_instance_url(instance),
+                           baseurl_instance=get_instance_url(instance),
                            rootid=rootid,
                            **kwargs)
 

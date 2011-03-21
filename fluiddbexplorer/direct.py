@@ -20,28 +20,13 @@ try:
 except ImportError:
     import simplejson as json
 
+from fluiddbexplorer.utils import get_instance_url
 from fluiddbexplorer import extdirect
-
-
-INSTANCE_URL = {
-    'fluidinfo': 'http://fluiddb.fluidinfo.com',
-    'main': 'http://fluiddb.fluidinfo.com',
-    'fluiddb': 'http://fluiddb.fluidinfo.com',
-    'sandbox': 'http://sandbox.fluidinfo.com',
-}
-
-
-def get_instance_url(instance):
-    try:
-        url = INSTANCE_URL[instance]
-    except KeyError:
-        url = 'http://' + instance
-    return url
 
 
 @extdirect.app.before_request
 def setup_fluid():
-    instance = session.get('instance', 'fluiddb')
+    instance = session.get('instance', 'main')
     g.fluid = Fluid(get_instance_url(instance))
 
 
