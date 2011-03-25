@@ -14,10 +14,10 @@ from flask import current_app, url_for
 
 
 INSTANCE_URLS = {
-    'main': 'http://fluiddb.fluidinfo.com',
-    'fluidinfo': 'http://fluiddb.fluidinfo.com',
-    'fluiddb': 'http://fluiddb.fluidinfo.com',
-    'sandbox': 'http://sandbox.fluidinfo.com',
+    'main': 'https://fluiddb.fluidinfo.com',
+    'fluidinfo': 'https://fluiddb.fluidinfo.com',
+    'fluiddb': 'https://fluiddb.fluidinfo.com',
+    'sandbox': 'https://sandbox.fluidinfo.com',
 }
 
 
