@@ -1,47 +1,39 @@
 # -*- coding: utf-8 -*-
 """
-fluiddbexplorer.direct
-~~~~~~~~~~~~~~~~~~~~~~
+    fluiddbexplorer.direct
+    ~~~~~~~~~~~~~~~~~~~~~~
 
-Ext.Direct functions
+    Ext.Direct functions
 
-:copyright: 2010 by Fluidinfo Explorer Authors
-:license: MIT, see LICENSE for more information
+    :copyright: 2010 by Fluidinfo Explorer Authors
+    :license: MIT, see LICENSE for more information
 """
 
-from flask import g, session
+from flask import Module, current_app, g, session
 from fom.session import Fluid
 from fom.db import PRIMITIVE_CONTENT_TYPE
 from fom.errors import Fluid404Error
 
 try:
     import json
+    json  # make pyflakes happy
 except ImportError:
     import simplejson as json
 
-from fluiddbexplorer import extdirect
+from flaskext.extdirect import ExtDirect
+
+from fluiddbexplorer.utils import get_instance_url
 
 
-INSTANCE_URL = {
-    'fluidinfo': 'http://fluiddb.fluidinfo.com',
-    'main': 'http://fluiddb.fluidinfo.com',
-    'fluiddb': 'http://fluiddb.fluidinfo.com',
-    'sandbox': 'http://sandbox.fluidinfo.com',
-}
+direct = Module(__name__)
+extdirect = ExtDirect(direct)
 
 
-def get_instance_url(instance):
-    try:
-        url = INSTANCE_URL[instance]
-    except KeyError:
-        url = 'http://' + instance
-    return url
-
-
-@extdirect.app.before_request
+@direct.before_request
 def setup_fluid():
-    instance = session.get('instance', 'fluiddb')
+    instance = session.get('instance', 'main')
     g.fluid = Fluid(get_instance_url(instance))
+
 
 @extdirect.before_request
 def setup_login():
@@ -51,6 +43,7 @@ def setup_login():
         g.fluid.login(sess_username, sess_password)
     except KeyError:
         pass
+
 
 @extdirect.register()
 def NamespacesFetch(namespace):
@@ -67,6 +60,7 @@ def NamespacesFetch(namespace):
         out.append({'id': 'tag-' + path + tag, 'leaf': True, 'text': tag})
     return out
 
+
 @extdirect.register()
 def Query(querystr):
     response = g.fluid.objects.get(querystr)
@@ -74,15 +68,15 @@ def Query(querystr):
 
     out = []
     k = 0
-    limit = extdirect.app.config.get('QUERY_RESULTSET_LIMIT', 0)
-    limit_abouttag = extdirect.app.config.get('QUERY_ABOUTTAG_LIMIT', 0)
+    limit = current_app.config.get('QUERY_RESULTSET_LIMIT', None)
+    limit_abouttag = current_app.config.get('QUERY_ABOUTTAG_LIMIT', None)
     showAbout = False if len(ids) > limit_abouttag else True
 
     for objid in ids:
 
-        k = k + 1
         if k == limit:
             break
+        k = k + 1
 
         if showAbout:
             try:
@@ -97,6 +91,7 @@ def Query(querystr):
         out.append({'oid': objid, 'about': about, 'type': type})
 
     return {'ids': out}
+
 
 @extdirect.register()
 def TagValuesFetch(oid):
@@ -130,7 +125,11 @@ def TagValuesFetch(oid):
             type = 'notfetch'
 
         ns = tag.split("/")[0]
-        out.append({'ns': ns, 'tag': tag, 'value': value, 'readonly': readonly, 'type': type})
+        out.append({'ns': ns,
+                    'tag': tag,
+                    'value': value,
+                    'readonly': readonly,
+                    'type': type})
 
     return {'tags': out}
 
@@ -168,6 +167,7 @@ def GetTagValue(oid, tag):
 def TagObject(oid, tag, value):
     g.fluid.objects[oid][tag].put(value)
 
+
 @extdirect.register(flags={'formHandler': True})
 def TagObjectForm(oid, tag, value, type):
     if type == 'int':
@@ -184,25 +184,31 @@ def TagObjectForm(oid, tag, value, type):
     g.fluid.objects[oid][tag].put(value)
     return {'success': True}
 
+
 @extdirect.register()
 def DeleteTagValue(oid, tag):
     g.fluid.objects[oid][tag].delete()
+
 
 @extdirect.register()
 def CreateNamespace(path, namespace, description):
     g.fluid.namespaces[path].post(namespace, description)
 
+
 @extdirect.register()
 def DeleteNamespace(namespace):
     g.fluid.namespaces[namespace].delete()
+
 
 @extdirect.register()
 def CreateTag(path, tag, description):
     g.fluid.tags[path].post(tag, description, False)
 
+
 @extdirect.register()
 def DeleteTag(tag):
     g.fluid.tags[tag].delete()
+
 
 @extdirect.register()
 def GetPerm(type, action, path):
@@ -211,6 +217,7 @@ def GetPerm(type, action, path):
     else:
         response = g.fluid.permissions.tag_values[path].get(action).value
     return response
+
 
 @extdirect.register()
 def SetPerm(type, action, path, policy, exceptions):
@@ -223,9 +230,11 @@ def SetPerm(type, action, path, policy, exceptions):
                                                policy,
                                                exceptions)
 
+
 @extdirect.register()
 def AboutToID(about):
     return g.fluid.about[about].get().value['id']
+
 
 @extdirect.register()
 def CreateObject(about):
@@ -234,6 +243,7 @@ def CreateObject(about):
     response = g.fluid.objects.post(about)
     return response.value['id']
 
+
 @extdirect.register(flags={'formHandler': True})
 def Login(username, password):
     instance = session.get('instance', 'fluiddb')
@@ -241,7 +251,7 @@ def Login(username, password):
     flogin.login(username, password)
 
     try:
-        response = flogin.namespaces[username].get()
+        flogin.namespaces[username].get()
 
         session['logged'] = True
         session['username'] = username
@@ -250,6 +260,7 @@ def Login(username, password):
 
     except:
         return {'success': False}
+
 
 @extdirect.register()
 def Logout():
