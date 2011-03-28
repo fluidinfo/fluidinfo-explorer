@@ -32,7 +32,7 @@ extdirect = ExtDirect(direct)
 @direct.before_request
 def setup_fluid():
     instance = session.get('instance', 'main')
-    g.fluid = Fluid(get_instance_url(instance))
+    g.fluid = Fluid(get_instance_url(instance, ssl=False))
 
 
 @extdirect.before_request
@@ -247,7 +247,7 @@ def CreateObject(about):
 @extdirect.register(flags={'formHandler': True})
 def Login(username, password):
     instance = session.get('instance', 'fluiddb')
-    flogin = Fluid(get_instance_url(instance))
+    flogin = Fluid(get_instance_url(instance, ssl=False))
     flogin.login(username, password)
 
     try:

@@ -10,23 +10,27 @@
 """
 
 import os
-from flask import current_app, url_for
+from flask import request, current_app, url_for
 
 
 INSTANCE_URLS = {
-    'main': 'http://fluiddb.fluidinfo.com',
-    'fluidinfo': 'http://fluiddb.fluidinfo.com',
-    'fluiddb': 'http://fluiddb.fluidinfo.com',
-    'sandbox': 'http://sandbox.fluidinfo.com',
+    'main': 'fluiddb.fluidinfo.com',
+    'fluidinfo': 'fluiddb.fluidinfo.com',
+    'fluiddb': 'fluiddb.fluidinfo.com',
+    'sandbox': 'sandbox.fluidinfo.com',
 }
 
 
-def get_instance_url(instance):
-    try:
-        url = INSTANCE_URLS[instance]
-    except KeyError:
-        url = 'http://' + instance
-    return url
+def get_instance_url(instance, ssl=None):
+    url = INSTANCE_URLS.get(instance, instance)
+
+    if ssl == None:
+        ssl = True if request.environ.get('HTTP_X_FORWARDED_SSL', '') == 'on' else False
+
+    if ssl == True:
+        return 'https://' + url
+    else:
+        return 'http://' + url
 
 
 def dated_url_for(endpoint, **values):
