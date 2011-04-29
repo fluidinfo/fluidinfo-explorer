@@ -1,8 +1,8 @@
 App.ObjectInfoWindow = Ext.extend(Ext.Window, {
 	title: 'Object information'
 	,border: false
-	,width: 350
-	,height: 150
+	,width: 520
+	,height: 200
 	,layout: 'fit'
 	,initComponent: function(){
 		this.items = [{
@@ -28,7 +28,10 @@ App.ObjectInfoWindow = Ext.extend(Ext.Window, {
 			if (value.match(/^https?:\/\//)) {
 				value = '<a href="' + value + '" target="_blank">' + value + '</a>';
 			}
-			txt = "Object ID: " + win.oid + "<br><br>About: " + value;
+			objurl = '<a href="' + App.Config.baseurl_instance + "/objects/" + win.oid + '" target="_blank">' + App.Config.baseurl_instance + "/objects/" + win.oid + '</a>';
+			txt = "Object ID: " + win.oid;
+			txt += "<br><br>About: " + value;
+			txt += "<br><br>Base object URL: " + objurl;
 			win.items.items[0].update(txt);
 			win.doLayout();
 		});
